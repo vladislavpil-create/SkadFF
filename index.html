@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Эффективность склада</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="hero">
+        <div class="hero-mark" aria-hidden="true">С</div>
+        <div>
+          <p class="eyebrow">Склад против ФФ</p>
+          <h1>Эффективность склада относительно ФФ</h1>
+          <p class="subtitle">Сравнение стоимости обработки одинакового объема операций</p>
+        </div>
+        <div class="hero-actions">
+          <button id="resetData" type="button">Сбросить</button>
+          <button id="saveData" class="primary" type="button">Сохранить</button>
+        </div>
+      </section>
+
+      <section class="top-grid">
+        <article class="glass-card kpi-wide">
+          <p class="card-title">Экономия относительно ФФ</p>
+          <div class="big-number" id="savingValue">0 ₽</div>
+          <div class="split-note">
+            <span>Склад дешевле при обработке того же объема</span>
+            <strong id="savingPercent">0%</strong>
+          </div>
+        </article>
+
+        <article class="glass-card">
+          <p class="card-title">Сравнение стоимости обработки</p>
+          <div class="mini-table" id="costCompare"></div>
+        </article>
+
+        <article class="glass-card kpi-side">
+          <p class="card-title">Ключевой KPI</p>
+          <span class="muted">Экономический эффект собственного склада</span>
+          <strong id="keyKpi">0 ₽</strong>
+        </article>
+      </section>
+
+      <section class="dashboard-grid">
+        <article class="glass-card">
+          <p class="card-title">Стоимость обработки по операциям</p>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Операция</th>
+                  <th>Склад</th>
+                  <th>ФФ</th>
+                  <th>Разница</th>
+                </tr>
+              </thead>
+              <tbody id="operationCosts"></tbody>
+            </table>
+          </div>
+        </article>
+
+        <article class="glass-card compact-card">
+          <p class="card-title">Объем обработанных операций</p>
+          <div id="operationVolumes"></div>
+          <div class="total-line">
+            <span>Всего операций</span>
+            <strong id="totalFact">0 шт.</strong>
+          </div>
+        </article>
+
+        <article class="glass-card">
+          <p class="card-title">Стоимость одной операции</p>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Операция</th>
+                  <th>Склад</th>
+                  <th>ФФ</th>
+                  <th>Разница</th>
+                </tr>
+              </thead>
+              <tbody id="unitCosts"></tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+
+      <section class="forecast-grid">
+        <article class="glass-card forecast-main">
+          <p class="card-title">План и прогноз</p>
+          <div class="forecast-summary" id="forecastSummary"></div>
+        </article>
+
+        <article class="glass-card">
+          <p class="card-title">Выполнение плана</p>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Показатель</th>
+                  <th>Факт</th>
+                  <th>План</th>
+                  <th>Прогноз</th>
+                </tr>
+              </thead>
+              <tbody id="planRows"></tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+
+      <section class="editor-layout">
+        <aside class="glass-card controls">
+          <div class="month-picker">
+            <div class="tabs" id="monthTabs" role="tablist" aria-label="Месяц"></div>
+            <button class="add-month" id="addMonth" type="button">+ месяц</button>
+          </div>
+
+          <div class="field">
+            <label for="monthLabel">Название месяца</label>
+            <input id="monthLabel" data-field="label" type="text" />
+          </div>
+          <div class="field">
+            <label for="ownFixed">Фактические расходы склада, ₽</label>
+            <input id="ownFixed" data-field="ownFixed" type="number" min="0" step="1" />
+          </div>
+
+          <div class="input-table">
+            <div class="input-head">
+              <span>Категория</span>
+              <span>Факт</span>
+              <span>Коэф.</span>
+              <span>ФФ ₽/шт</span>
+            </div>
+            <div id="operationInputs"></div>
+          </div>
+
+          <div class="plan-editor">
+            <h2>План месяца</h2>
+            <div class="input-table plan-operation-table">
+              <div class="input-head">
+                <span>Операция</span>
+                <span>План</span>
+              </div>
+              <div id="planOperationInputs"></div>
+            </div>
+            <div class="field calculated-field">
+              <label for="planSaving">План экономии, ₽</label>
+              <input id="planSaving" data-plan-field="targetSaving" type="number" readonly />
+            </div>
+            <div class="field">
+              <label for="planOwnBudget">Бюджет склада, ₽</label>
+              <input id="planOwnBudget" data-plan-field="targetOwnBudget" type="number" min="0" step="1" />
+            </div>
+            <div class="plan-days">
+              <div class="field">
+                <label for="daysPassed">Дней прошло</label>
+                <input id="daysPassed" data-plan-field="daysPassed" type="number" min="1" step="1" />
+              </div>
+              <div class="field">
+                <label for="workDays">Дней в плане</label>
+                <input id="workDays" data-plan-field="workDays" type="number" min="1" step="1" />
+              </div>
+            </div>
+          </div>
+        </aside>
+
+        <section class="glass-card">
+          <p class="card-title">Сравнение эффективности по месяцам</p>
+          <div class="method-strip">
+            <strong>Коэффициент сложности</strong>
+            <span>Поставка = 1, утилизация и рекламация = 2,9. Взвешенный объем показывает нагрузку склада в единых рабочих единицах.</span>
+          </div>
+          <div class="comparison-grid">
+            <article>
+              <h2>Взвешенные единицы</h2>
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Месяц</th>
+                      <th>Факт</th>
+                      <th>Взвешено</th>
+                    </tr>
+                  </thead>
+                  <tbody id="weightedRows"></tbody>
+                </table>
+              </div>
+            </article>
+            <article>
+              <h2>Что изменилось</h2>
+              <div class="change-list" id="changes"></div>
+            </article>
+          </div>
+          <div class="conclusion" id="conclusion"></div>
+        </section>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
