@@ -1,8 +1,8 @@
 :root {
   color-scheme: light;
   --bg: #f4ede4;
-  --panel: rgba(255, 250, 244, 0.82);
-  --panel-strong: rgba(255, 252, 248, 0.92);
+  --panel: rgba(255, 250, 244, 0.68);
+  --panel-strong: rgba(255, 252, 248, 0.8);
   --ink: #342419;
   --muted: #776151;
   --line: rgba(146, 104, 68, 0.2);
@@ -21,10 +21,7 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
-  background:
-    linear-gradient(180deg, rgba(255, 250, 244, 0.82), rgba(245, 236, 225, 0.74)),
-    radial-gradient(circle at 18% 8%, rgba(140, 81, 41, 0.12), transparent 30%),
-    var(--bg);
+  background: var(--bg);
   color: var(--ink);
   font-family: Inter, "Segoe UI", Arial, sans-serif;
 }
@@ -34,10 +31,12 @@ body::before {
   position: fixed;
   inset: 0;
   z-index: 0;
-  background:
-    linear-gradient(180deg, rgba(255, 252, 247, 0.38), rgba(244, 236, 227, 0.58)),
-    url("assets/warehouse-wallpaper.png") center center / cover no-repeat;
-  opacity: 0.72;
+  background-color: #f4ede4;
+  background-image: url("assets/warehouse-wallpaper.png");
+  background-repeat: no-repeat;
+  background-position: center top;
+  background-size: 100vw auto;
+  opacity: 1;
   pointer-events: none;
 }
 
@@ -152,7 +151,7 @@ button:hover {
   border-radius: 8px;
   background: var(--panel);
   box-shadow: var(--shadow);
-  backdrop-filter: blur(16px);
+  backdrop-filter: blur(18px);
 }
 
 .top-grid,
@@ -338,7 +337,7 @@ tr:last-child td {
   overflow: hidden;
   border-color: rgba(140, 81, 41, 0.24);
   background:
-    linear-gradient(135deg, rgba(255, 250, 244, 0.94), rgba(244, 232, 217, 0.84));
+    linear-gradient(135deg, rgba(255, 250, 244, 0.76), rgba(244, 232, 217, 0.66));
   box-shadow: 0 28px 72px rgba(74, 44, 18, 0.18);
 }
 
@@ -390,7 +389,7 @@ tr:last-child td {
   border: 1px solid var(--line);
   border-radius: 8px;
   padding: 12px;
-  background: rgba(255, 255, 255, 0.46);
+  background: rgba(255, 255, 255, 0.34);
 }
 
 .forecast-card span,
@@ -556,9 +555,9 @@ input:focus {
 }
 
 @media (max-width: 1080px) {
-  body::before,
-  body::after {
-    display: none;
+  body::before {
+    background-position: center center;
+    background-size: cover;
   }
 
   .top-grid,
