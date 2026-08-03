@@ -1,15 +1,15 @@
 :root {
   color-scheme: light;
-  --bg: #f4efe7;
-  --panel: rgba(255, 252, 247, 0.82);
-  --panel-strong: #fffaf2;
-  --ink: #2c261f;
-  --muted: #776c60;
-  --line: rgba(183, 159, 130, 0.28);
-  --orange: #d96d38;
-  --green: #4c7c4b;
-  --red: #b0524c;
-  --shadow: 0 22px 60px rgba(86, 63, 38, 0.12);
+  --bg: #f4ede4;
+  --panel: rgba(255, 250, 244, 0.82);
+  --panel-strong: rgba(255, 252, 248, 0.92);
+  --ink: #342419;
+  --muted: #776151;
+  --line: rgba(146, 104, 68, 0.2);
+  --orange: #8c5129;
+  --green: #5b7151;
+  --red: #a1563a;
+  --shadow: 0 24px 60px rgba(74, 44, 18, 0.16);
 }
 
 * {
@@ -22,8 +22,8 @@ body {
   min-width: 320px;
   min-height: 100vh;
   background:
-    linear-gradient(120deg, rgba(255, 255, 255, 0.8), rgba(236, 222, 202, 0.5)),
-    radial-gradient(circle at 12% 0%, rgba(217, 109, 56, 0.12), transparent 32%),
+    linear-gradient(180deg, rgba(255, 250, 244, 0.82), rgba(245, 236, 225, 0.74)),
+    radial-gradient(circle at 18% 8%, rgba(140, 81, 41, 0.12), transparent 30%),
     var(--bg);
   color: var(--ink);
   font-family: Inter, "Segoe UI", Arial, sans-serif;
@@ -34,33 +34,10 @@ body::before {
   position: fixed;
   inset: 0;
   z-index: 0;
-  background-image: url("assets/peony-roses.png");
-  background-repeat: no-repeat;
-  background-position: center top;
-  background-size: max(100vw, 1580px) auto;
-  opacity: 0.38;
-  -webkit-mask-image: linear-gradient(
-    90deg,
-    #000 0%,
-    #000 7%,
-    rgba(0, 0, 0, 0.9) 16%,
-    transparent 34%,
-    transparent 66%,
-    rgba(0, 0, 0, 0.9) 84%,
-    #000 93%,
-    #000 100%
-  );
-  mask-image: linear-gradient(
-    90deg,
-    #000 0%,
-    #000 7%,
-    rgba(0, 0, 0, 0.9) 16%,
-    transparent 34%,
-    transparent 66%,
-    rgba(0, 0, 0, 0.9) 84%,
-    #000 93%,
-    #000 100%
-  );
+  background:
+    linear-gradient(180deg, rgba(255, 252, 247, 0.38), rgba(244, 236, 227, 0.58)),
+    url("assets/warehouse-wallpaper.png") center center / cover no-repeat;
+  opacity: 0.72;
   pointer-events: none;
 }
 
@@ -180,6 +157,7 @@ button:hover {
 
 .top-grid,
 .dashboard-grid,
+.result-banner,
 .forecast-grid,
 .comparison-grid {
   display: grid;
@@ -201,8 +179,13 @@ button:hover {
   margin-bottom: 14px;
 }
 
+.result-banner {
+  margin-bottom: 14px;
+}
+
 .top-grid .glass-card,
 .dashboard-grid .glass-card,
+.result-banner .glass-card,
 .forecast-grid .glass-card,
 .editor-layout > .glass-card,
 .controls {
@@ -348,6 +331,58 @@ tr:last-child td {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
+}
+
+.summary-callout {
+  position: relative;
+  overflow: hidden;
+  border-color: rgba(140, 81, 41, 0.24);
+  background:
+    linear-gradient(135deg, rgba(255, 250, 244, 0.94), rgba(244, 232, 217, 0.84));
+  box-shadow: 0 28px 72px rgba(74, 44, 18, 0.18);
+}
+
+.summary-callout::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(140, 81, 41, 0.05));
+  pointer-events: none;
+}
+
+.summary-lead,
+.summary-copy {
+  position: relative;
+  z-index: 1;
+  max-width: 920px;
+}
+
+.summary-lead {
+  margin-bottom: 8px;
+  font-size: clamp(26px, 3vw, 34px);
+  line-height: 1.22;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.summary-lead strong {
+  color: var(--orange);
+  font-size: 1.08em;
+}
+
+.summary-copy {
+  margin-bottom: 0;
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1.65;
+}
+
+.summary-callout .card-title {
+  margin-bottom: 10px;
+  color: var(--orange);
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .forecast-card {

@@ -89,6 +89,8 @@ const els = {
   planOperationInputs: document.querySelector("#planOperationInputs"),
   forecastSummary: document.querySelector("#forecastSummary"),
   planRows: document.querySelector("#planRows"),
+  summaryLead: document.querySelector("#summaryLead"),
+  summaryCopy: document.querySelector("#summaryCopy"),
   monthLabel: document.querySelector("#monthLabel"),
   ownFixed: document.querySelector("#ownFixed"),
   planInputs: document.querySelectorAll("[data-plan-field]"),
@@ -425,6 +427,7 @@ function renderDashboard() {
     .join("");
 
   renderForecast(current, forecast);
+  renderSummary(current);
 
   els.weightedRows.innerHTML = monthOrder
     .filter((key) => data[key])
@@ -466,6 +469,13 @@ function getPreviousMonthKey(monthKey) {
   const index = monthOrder.indexOf(monthKey);
   if (index <= 0) return "";
   return monthOrder[index - 1];
+}
+
+function renderSummary(current) {
+  const monthText = monthLabelInPrepositional(current.label);
+  els.summaryLead.innerHTML = `${capitalize(monthText)} собственный склад дал бизнесу прямую экономию <strong>${money(current.saving)}</strong> по сравнению с ФФ.`;
+  els.summaryCopy.textContent =
+    "При этом склад полностью обеспечил обработку рекламации и утилизации, а остатки были сведены без расхождений.";
 }
 
 function changeRow(label, item, inverseGood) {
@@ -651,6 +661,30 @@ function percentText(value) {
 
 function tone(value) {
   return value >= 0 ? "positive" : "negative";
+}
+
+function monthLabelInPrepositional(label) {
+  const [monthName = "", year = ""] = String(label || "").split(" ");
+  const forms = {
+    "январь": "в январе",
+    "февраль": "в феврале",
+    "март": "в марте",
+    "апрель": "в апреле",
+    "май": "в мае",
+    "июнь": "в июне",
+    "июль": "в июле",
+    "август": "в августе",
+    "сентябрь": "в сентябре",
+    "октябрь": "в октябре",
+    "ноябрь": "в ноябре",
+    "декабрь": "в декабре",
+  };
+  const prefix = forms[monthName.toLowerCase()] || `в ${String(label || "").toLowerCase()}`;
+  return year ? `${prefix} ${year}` : prefix;
+}
+
+function capitalize(text) {
+  return text ? text[0].toUpperCase() + text.slice(1) : text;
 }
 
 render();
